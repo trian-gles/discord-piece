@@ -116,4 +116,4 @@ def ending(ctx):
     yield lambda: ctx.send("CLAPCLAPCLAPCLAP")
     quit()
 
-client.run('NzY5MDE1NzY1Mjg1MjA4MDY0.X5I3vg.JARz0sXNjXFBlYUtJK4E0OUU4NY')
+client.run('INSERT TOKEN HERE')
