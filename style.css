@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap');
+
+:root {
+  --color-red: #45343d;
+  --color-black: #191c1c;
+  --color-white: #ededed;
+  --bar-height: 20px;
+}
+
+body {
+  font-family: 'Audiowide', cursive;
+  background-color: var(--color-white);
+  font-size: 14px;
+}
+
+header {
+  display: block;
+}
+
+#title {
+
+}
+
+#smaller {
+  font-size: 12px;
+  margin: 3px;
+}
+
+.bar {
+  width: 60%;
+  height: var(--bar-height);
+  background: var(--color-red);
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.bar:after {
+      content: "";
+      position: absolute;
+      background: var(--color-red);
+      left: 90%;
+      width: 30%;
+      height: var(--bar-height);
+      transform: skewX(80deg)
+    }
+
+@media (max-width:900px) {
+  .bar:after {
+    left: 80%;
+    width: 40%
+  }
+}
+
+@media (max-width:500px) {
+  .bar:after {
+    left: 65%;
+    width: 70%;
+  }
+}
+
+h2 {
+  width: 90%;
+  margin: 15px auto 15px auto;
+}
+
+.main-content {
+  margin: 0 auto 30px;
+  padding: 0 10px 10px 10px;
+  border: 2px solid var(--color-red);
+  border-radius: 4px;
+  width: 80%;
+}
+
+p {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 16px;
+}
+
+code {
+  background: white;
+  padding: 2px;
+  font-size: 15px;
+  ;
+}
