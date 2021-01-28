@@ -1,0 +1,128 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap');
+
+  :root {
+    --color-red: #45343d;
+    --color-black: #191c1c;
+    --color-white: #ededed;
+    --bar-height: 20px;
+  }
+
+  body {
+    font-family: 'Audiowide', cursive;
+    background-color: var(--color-white);
+    font-size: 14px;
+  }
+
+  header {
+    display: block;
+  }
+
+  #title {
+
+  }
+
+  #smaller {
+    font-size: 12px;
+    margin: 3px;
+  }
+
+  .bar {
+    width: 60%;
+    height: var(--bar-height);
+    background: var(--color-red);
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .bar:after {
+        content: "";
+        position: absolute;
+        background: var(--color-red);
+        left: 90%;
+        width: 30%;
+        height: var(--bar-height);
+        transform: skewX(80deg)
+      }
+
+  @media (max-width:900px) {
+    .bar:after {
+      left: 80%;
+      width: 40%
+    }
+  }
+
+  @media (max-width:500px) {
+    .bar:after {
+      left: 65%;
+      width: 70%;
+    }
+  }
+
+  h2 {
+    width: 90%;
+    margin: 15px auto 15px auto;
+  }
+
+  .main-content {
+    margin: 0 auto 30px;
+    padding: 0 10px 10px 10px;
+    border: 2px solid var(--color-red);
+    border-radius: 4px;
+    width: 80%;
+  }
+
+  p {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 16px;
+  }
+
+  code {
+    background: white;
+    padding: 2px;
+    font-size: 15px;
+    ;
+  }
+
+
+</style>
+
+<header>
+  <h1 id="title">Discord Piece V.02</h1>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+ </header>
+<h2 id="program-note">Program note</h2>
+<div class="main-content">
+  <p>Though it heavily limits opportunities for live group improvisation, the COVID-19 pandemic encourages the use of electronic stages, which offer a variety of new avenues of expression.  This piece uses Discord's "Voice Channel" system to divide a large jam session into isolate sub-groups, a process not feasible in a physical space.  This allows for a variety of unlikely interactions, and creates an array of semi-related musical threads.</p>
+</div>
+<h2 id="coordinator">Directions for coordinator</h2>
+<div class="main-content">
+  <h3>Server Setup</h3>
+  <p>Create a Discord server with a number of Voice Channels equal to the number of performers divided by two, rounded down.  The first channel on the list must be given the name "MainStage".  Create a role in this server titled "performer" and assign this role to all of your performers.</p>
+
+  <h3>Bot Setup</h3>
+  <p>Requires python 3.9+ and discord.py.</p> <code>pip install discord</code><p>Clone <a href="https://github.com/trian-gles/discord-piece">this Github repository</a> on your local machine.  Create a Discord bot with administrative privledges at the <a href="https://discord.com/developers/">Discord Developer site</a>.  Invite this bot to your server.  Copy the OAuth2 token into the space in the main.py file.  Finally, simply run the script:</p><code>python3 main.py</code>
+  <h3>Running the Performance</h3>
+  <p>Once the bot is configured and running, and all the performers are assigned the "performer" role waiting in the "MainStage" voice channel, type the following command directly in the Discord chat:</p><code>.setup</code><p>If you receive the message "Setup Complete", the piece is ready to run.  Enter the following command and the piece will commence:</p><code>.begin</code>
+</div>
+
+<h2 id="performers">Directions for performers</h2>
+<div class="main-content">
+  <h3>Setup</h3>
+  <p>Using a computer(mobile will not work), follow the discord server invite sent to you by the coordinator.  If you do not have a discord account, set one up.  Next, click on "User Settings" and under app settings click on "Voice and Video". Turn off "Echo Cancellation", "Noise Reduction" and "Automatic Gain Control".  Finally, join the voice channel "MainStage" by clicking on it.  Note-Discord by default does not offer stereo audio.  However, if you so desire, using a third party application such as Ripcord you can enable it.</p>
+
+  <h3>Performance</h3>
+  <p>In this piece, you will be shuffled through various audio channels, meeting a variety of other improvisers.  In each new setting you enter, try to set up an atmosphere, and carry traces of this atmosphere you develop in all your interactions throughout the duration of the piece.</p>
+</div>
+
+<footer>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <p>&#169;2021 B. Kieran McAuliffe</p>
+  <a href="kieranmcauliffemusic.com">kieranmcauliffemusic.com</a>
+</footer>
