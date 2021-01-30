@@ -4,8 +4,9 @@ from random import choice, randrange, shuffle
 from combs import build_steps
 
 class Performer:
-    def __init__(self, member):
+    def __init__(self, member, other_mem):
         self.member = member
+        self.other_mem = other_mem
         self.channel = None
         self.been_to_main = False
 
@@ -43,6 +44,8 @@ async def periodic():
         actions = climax(context)
     elif counter == turn_count + 1:
         actions = ending(context)
+    elif counter == turn_count + 2:
+        actions = applause(context)
     else:
         actions = move_members(context, counter)
 
@@ -71,9 +74,16 @@ async def setup(ctx):
     performers = []
     for member in ctx.guild.members:
         if "performer" in [role.name for role in member.roles] and member.voice:
-            performers.append(Performer(member))
-            await member.edit(mute=False)
             print(f"Registering performer name={member.name} id={member.id}")
+            alt_account = None
+            nick = member.nick
+            for other_mem in ctx.guild.members:
+                if other_mem.nick == (nick + "_alt"):
+                    print(f"Registering alt account for {member.name}: {other_mem.name}")
+                    alt_account = other_mem
+            performers.append(Performer(member, alt_account))
+            await member.edit(mute=False)
+
     for voice_channel in ctx.guild.voice_channels:
         voice_channels[voice_channel.name] = voice_channel
         print(f"Registering channel '{voice_channel.name}'")
@@ -98,8 +108,11 @@ def move_members(ctx, i):
     current_step = steps[i]
     channel_list = list(voice_channels.values())
     for room_num in range(len(current_step)):
-        for p in current_step[room_num]:
-            yield lambda: p.tag.member.move_to(channel_list[room_num])
+        for item in current_step[room_num]:
+            yield lambda: item.tag.member.move_to(channel_list[room_num])
+            if item.tag.other_mem:
+                print(f"Move alt account {item.tag.other_mem.name}")
+                yield lambda:item.tag.other_mem.move_to(channel_list[room_num])
 
 
 def climax(ctx):
@@ -107,13 +120,20 @@ def climax(ctx):
     for performer in performers:
         if performer.member.voice:
             yield lambda: performer.member.move_to(voice_channels["MainStage"])
+            if performer.other_mem:
+                yield lambda: performer.other_mem.move_to(voice_channels["MainStage"])
 
 
 def ending(ctx):
     for performer in performers:
         if performer.member.voice:
             yield lambda: performer.member.edit(mute=True)
+
+def applause(ctx):
+    for performer in performers:
+        if performer.member.voice:
+            yield lambda: performer.member.edit(mute=False)
     yield lambda: ctx.send("CLAPCLAPCLAPCLAP")
     quit()
 
-client.run('INSERT TOKEN HERE')
+client.run('INSERT TOKEN')
