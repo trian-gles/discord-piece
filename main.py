@@ -21,7 +21,7 @@ class Performer:
         return self.member.name
 
 turn_count = None
-TURN_LENGTH = 5
+TURN_LENGTH = 20
 
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix = '.', intents=intents)
@@ -78,9 +78,10 @@ async def setup(ctx):
             alt_account = None
             nick = member.nick
             for other_mem in ctx.guild.members:
-                if other_mem.nick == (nick + "_alt"):
-                    print(f"Registering alt account for {member.name}: {other_mem.name}")
-                    alt_account = other_mem
+                if other_mem.nick:
+                    if other_mem.nick == (nick + "_alt"):
+                        print(f"Registering alt account for {member.name}: {other_mem.name}")
+                        alt_account = other_mem
             performers.append(Performer(member, alt_account))
             await member.edit(mute=False)
 
