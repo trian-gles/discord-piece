@@ -20,8 +20,7 @@ class Performer:
     def __str__(self):
         return self.member.name
 
-turn_count = None
-TURN_LENGTH = 20
+TURN_LENGTH = 35
 
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix = '.', intents=intents)
@@ -71,6 +70,8 @@ async def setup(ctx):
     global steps
     setup = True
     context = ctx
+
+    #labeling performers
     performers = []
     for member in ctx.guild.members:
         if "performer" in [role.name for role in member.roles] and member.voice:
@@ -85,13 +86,24 @@ async def setup(ctx):
             performers.append(Performer(member, alt_account))
             await member.edit(mute=False)
 
+    #adding extra voice channels
+    required_vcs = int(len(members) / 2)
+    extra_count = 1
+    while len(ctx.guild.voice_channels) < required_vcs:
+        ctx.guild.create_voice_channel(f"Extra_{extra_count}")
+        extra_count += 1
+
+    #registering vcs
     for voice_channel in ctx.guild.voice_channels:
         voice_channels[voice_channel.name] = voice_channel
         print(f"Registering channel '{voice_channel.name}'")
+
+    #building the various movements
     steps = build_steps(performers)
     turn_count = len(steps)
     print(f"steps = {steps}")
     print(f"Number f turns = {turn_count}")
+
     await ctx.send("Setup Complete")
 
 @client.command()
@@ -137,4 +149,4 @@ def applause(ctx):
     yield lambda: ctx.send("CLAPCLAPCLAPCLAP")
     quit()
 
-client.run('INSERT TOKEN')
+client.run('NzY5MDE1NzY1Mjg1MjA4MDY0.X5I3vg.D3teqwMpl_NYlGMRwmEli-uK7gk')
