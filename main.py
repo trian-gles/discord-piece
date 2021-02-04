@@ -20,7 +20,8 @@ class Performer:
     def __str__(self):
         return self.member.name
 
-TURN_LENGTH = 35
+TURN_LENGTH = 3
+turn_count = 5
 
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix = '.', intents=intents)
@@ -33,7 +34,7 @@ run = False
 start_time = 0
 counter = 0
 
-@tasks.loop(seconds=TURN_LENGTH, count=turn_count)
+@tasks.loop(seconds=TURN_LENGTH)
 async def periodic():
     global counter
     if not run:
@@ -62,6 +63,10 @@ async def on_ready():
 
 @client.command()
 async def setup(ctx):
+    if not ctx.message.author.guild_permissions.administrator:
+        await ctx.send("Only admins can invoke this command.")
+        return
+
     global context
     global voice_channel
     global setup
@@ -87,10 +92,10 @@ async def setup(ctx):
             await member.edit(mute=False)
 
     #adding extra voice channels
-    required_vcs = int(len(members) / 2)
+    required_vcs = int(len(performers) / 2)
     extra_count = 1
     while len(ctx.guild.voice_channels) < required_vcs:
-        ctx.guild.create_voice_channel(f"Extra_{extra_count}")
+        await ctx.guild.create_voice_channel(f"Extra_{extra_count}")
         extra_count += 1
 
     #registering vcs
@@ -108,6 +113,9 @@ async def setup(ctx):
 
 @client.command()
 async def begin(ctx):
+    if not ctx.message.author.guild_permissions.administrator:
+        await ctx.send("Only admins can invoke this command.")
+        return
     global run
     if setup and not run:
         run = True
@@ -115,6 +123,15 @@ async def begin(ctx):
         await ctx.send(f"LETS MAKE SOME NOISE")
     else:
         print("Please run the setup command first!!")
+
+@client.command()
+async def mute_all(ctx):
+    if not ctx.message.author.guild_permissions.administrator:
+        await ctx.send("Only admins can invoke this command.")
+        return
+    for performer in performers:
+        if performer.member.voice and (performer.member != ctx.message.author):
+            await performer.member.edit(mute=True)
 
 def move_members(ctx, i):
     print(f"Moving all members to position {steps[i]}")
@@ -149,4 +166,4 @@ def applause(ctx):
     yield lambda: ctx.send("CLAPCLAPCLAPCLAP")
     quit()
 
-client.run('NzY5MDE1NzY1Mjg1MjA4MDY0.X5I3vg.D3teqwMpl_NYlGMRwmEli-uK7gk')
+client.run('INSERT KEY')
