@@ -20,7 +20,7 @@ class Performer:
     def __str__(self):
         return self.member.name
 
-TURN_LENGTH = 3
+TURN_LENGTH = 35
 turn_count = 5
 
 intents = discord.Intents.all()
@@ -83,11 +83,11 @@ async def setup(ctx):
             print(f"Registering performer name={member.name} id={member.id}")
             alt_account = None
             nick = member.nick
-            for other_mem in ctx.guild.members:
-                if other_mem.nick:
-                    if other_mem.nick == (nick + "_alt"):
-                        print(f"Registering alt account for {member.name}: {other_mem.name}")
-                        alt_account = other_mem
+#            for other_mem in ctx.guild.members:
+#                if other_mem.nick:
+#                    if other_mem.nick == (nick + "_alt"):
+#                        print(f"Registering alt account for {member.name}: {other_mem.name}")
+#                        alt_account = other_mem
             performers.append(Performer(member, alt_account))
             await member.edit(mute=False)
 
@@ -166,4 +166,4 @@ def applause(ctx):
     yield lambda: ctx.send("CLAPCLAPCLAPCLAP")
     quit()
 
-client.run('INSERT KEY')
+client.run('NzY5MDE1NzY1Mjg1MjA4MDY0.X5I3vg.B78J2AsoX85vmpuck7v3tfLxas4')
