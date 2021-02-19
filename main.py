@@ -166,4 +166,4 @@ def applause(ctx):
     yield lambda: ctx.send("CLAPCLAPCLAPCLAP")
     quit()
 
-client.run('NzY5MDE1NzY1Mjg1MjA4MDY0.X5I3vg.B78J2AsoX85vmpuck7v3tfLxas4')
+client.run('TOKEN HERE')
